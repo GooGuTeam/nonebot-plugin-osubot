@@ -78,8 +78,10 @@ def split_msg():
                     "模式应为0-8(没有7)！\n0: std\n1: taiko\n2: ctb\n3: mania\n4-6: SB服 RX 模式\n8: SB服 AP 模式"
                 )
         else:
-            if not state["mode"].isdigit() or not (0 <= int(state["mode"]) <= 3):
-                state["error"] = "模式应为0-3！\n0: std\n1: taiko\n2: ctb\n3: mania"
+            if not state["mode"].isdigit() or not (0 <= int(state["mode"]) <= 7):
+                state["error"] = (
+                    "模式应为0-7！\n0: std\n1: taiko\n2: ctb\n3: mania\n4: osurx\n5: osuap\n6: taikorx\n7: catchrx"
+                )
         if isinstance(state["day"], str) and (not state["day"].isdigit() or int(state["day"]) < 0):
             state["error"] = "查询的日期应是一个正数"
         if state["user"] == 0:

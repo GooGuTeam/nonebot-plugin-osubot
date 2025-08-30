@@ -24,7 +24,7 @@ def cal_pp(score: UnifiedScore, path: str, is_lazer: bool) -> PerformanceAttribu
         large_tick_hits=score.statistics.large_tick_hit,
         slider_end_hits=score.statistics.slider_tail_hit,
         mods=[mod.model_dump() for mod in score.mods] if is_v2 else [mod.dict() for mod in score.mods],
-        lazer=cal_lazer(score, is_lazer),
+        lazer=True,
     )
     return c.calculate(beatmap)
 
@@ -75,11 +75,11 @@ def get_strains(path: str, mods: int) -> Strains:
 
 
 def convert_mode(score: UnifiedScore, beatmap: Beatmap):
-    if score.ruleset_id in {0, 4, 8}:
+    if score.ruleset_id in {0, 4, 5}:
         mode = GameMode.Osu
-    elif score.ruleset_id in {1, 5}:
+    elif score.ruleset_id in {1, 6}:
         mode = GameMode.Taiko
-    elif score.ruleset_id in {2, 6}:
+    elif score.ruleset_id in {2, 7}:
         mode = GameMode.Catch
     else:
         mode = GameMode.Mania

@@ -22,7 +22,7 @@ from .schema.score import UnifiedScore, NewStatistics, UnifiedBeatmap
 from .schema.ppysb import InfoResponse, ScoresResponse, V2ScoresResponse
 from .schema.user import Level, GradeCounts, UnifiedUser, UserStatistics
 
-api = "https://osu.ppy.sh/api/v2"
+api = "https://lazer-api.g0v0.top/api/v2"
 sayoapi = "https://api.sayobot.cn"
 cache = ExpiringDict(max_len=1, max_age_seconds=86400)
 plugin_config = get_plugin_config(Config)
@@ -47,12 +47,12 @@ async def safe_async_post(url, headers=None, data=None, json=None) -> Response:
 
 
 async def renew_token():
-    url = "https://osu.ppy.sh/oauth/token"
+    url = "https://lazer-api.g0v0.top/oauth/token"
     if not key or not client_id:
         raise Exception("请设置osu_key和osu_client")
     req = await safe_async_post(
         url,
-        json={
+        data={
             "client_id": client_id,
             "client_secret": key,
             "grant_type": "client_credentials",
@@ -100,7 +100,7 @@ async def fetch_score_batch(
             rank=i.rank,
             accuracy=i.accuracy * 100,
             total_score=i.total_score,
-            ended_at=datetime.strptime(i.ended_at.replace("Z", ""), "%Y-%m-%dT%H:%M:%S") + timedelta(hours=8),
+            ended_at=datetime.fromisoformat(i.ended_at),
             max_combo=i.max_combo,
             statistics=i.statistics,
             legacy_total_score=i.legacy_total_score,
